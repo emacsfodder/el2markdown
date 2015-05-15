@@ -239,9 +239,13 @@
 
 (defun el2markdown-convert-title ()
   (when (looking-at ";;+ \\(.*\\)\\.el --+ \\(.*\\)$")
-    (el2markdown-emit-header 1 (concat (match-string-no-properties 1)
-                                       " - "
-                                       (match-string-no-properties 2)))
+  (let* ((title (match-string-no-properties 1))
+         (summary (match-string-no-properties 2)))
+    ;;; TODO: Capitalize title words, replace dashes with spaces
+    (el2markdown-emit-header 1 title)
+    ;;; TODO: Initial caps on summary
+    (el2markdown-emit-text summary)
+    (el2markdown-emit-hr)
     (forward-line)))
 
 
